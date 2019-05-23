@@ -11,5 +11,13 @@
 
     <artifactId>v12-common</artifactId>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.huangguizhao</groupId>
+            <artifactId>v12-entity</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

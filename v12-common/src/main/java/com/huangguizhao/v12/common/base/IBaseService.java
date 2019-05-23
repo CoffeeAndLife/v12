@@ -6,7 +6,7 @@ import java.util.List;
  * @author HuangGuiZhao
  * @Date 2019/3/8
  */
-public interface IBaseDao<T> {
+public interface IBaseService<T> {
     int deleteByPrimaryKey(Long id);
 
     int insert(T t);

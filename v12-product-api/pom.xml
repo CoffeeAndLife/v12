@@ -11,5 +11,11 @@
 
     <artifactId>v12-product-api</artifactId>
 
-
+    <dependencies>
+        <dependency>
+            <groupId>com.huangguizhao</groupId>
+            <artifactId>v12-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+    </dependencies>
 </project>
