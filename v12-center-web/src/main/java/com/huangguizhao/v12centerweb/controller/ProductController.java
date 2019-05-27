@@ -24,4 +24,9 @@ public class ProductController {
     public TProduct get(@PathVariable("id") Long id){
         return productApi.selectByPrimaryKey(id);
     }
+
+    @GetMapping("list")
+    public String list(){
+        return "product/list";
+    }
 }
