@@ -6,7 +6,10 @@ import com.huangguizhao.v12.api.IProductApi;
 import com.huangguizhao.v12.common.base.BaseServiceImpl;
 import com.huangguizhao.v12.common.base.IBaseDao;
 import com.huangguizhao.v12.entity.TProduct;
+import com.huangguizhao.v12.entity.TProductDesc;
+import com.huangguizhao.v12.mapper.TProductDescMapper;
 import com.huangguizhao.v12.mapper.TProductMapper;
+import com.huangguizhao.v12.vo.TProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,6 +25,9 @@ public class ProductServiceImpl extends BaseServiceImpl<TProduct> implements IPr
     @Autowired
     private TProductMapper productMapper;
 
+    @Autowired
+    private TProductDescMapper productDescMapper;
+
     @Override
     public IBaseDao<TProduct> getBaseDao() {
         return productMapper;
@@ -36,5 +42,18 @@ public class ProductServiceImpl extends BaseServiceImpl<TProduct> implements IPr
         //3.构建分页对象
         PageInfo<TProduct> pageInfo = new PageInfo<>(list,2);
         return pageInfo;
+    }
+
+    @Override
+    public Long add(TProductVO vo) {
+        //1.添加商品的基本信息，主键回填
+        TProduct product = vo.getProduct();
+        productMapper.insertSelective(product);
+        //2.添加商品的描述信息
+        TProductDesc desc = new TProductDesc();
+        desc.setProductDesc(vo.getProductDesc());
+        desc.setProductId(product.getId());
+        productDescMapper.insertSelective(desc);
+        return product.getId();
     }
 }

@@ -4,12 +4,10 @@ import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 import com.huangguizhao.v12.api.IProductApi;
 import com.huangguizhao.v12.entity.TProduct;
+import com.huangguizhao.v12.vo.TProductVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -41,6 +39,13 @@ public class ProductController {
         PageInfo<TProduct> pageInfo = productApi.page(pageIndex,pageSize);
         model.addAttribute("pageInfo",pageInfo);
         return "product/list";
+    }
+
+    @PostMapping("add")
+    public String add(TProductVO vo){
+        Long newId = productApi.add(vo);
+        //
+        return "redirect:product/page/1/1";
     }
 
 

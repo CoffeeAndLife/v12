@@ -20,7 +20,6 @@ public class CommonConfig {
         properties.setProperty("reasonable","true");
         //
         pageHelper.setProperties(properties);
-
         return pageHelper;
     }
 }

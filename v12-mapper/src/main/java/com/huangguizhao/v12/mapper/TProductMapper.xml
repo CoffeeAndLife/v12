@@ -40,7 +40,7 @@
       #{price,jdbcType=BIGINT}, #{images,jdbcType=VARCHAR}, #{typeId,jdbcType=BIGINT}, 
       #{typeName,jdbcType=VARCHAR}, #{flag,jdbcType=BIT})
   </insert>
-  <insert id="insertSelective" parameterType="com.huangguizhao.v12.entity.TProduct">
+  <insert id="insertSelective" parameterType="com.huangguizhao.v12.entity.TProduct" useGeneratedKeys="true" keyProperty="id">
     insert into t_product
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -64,9 +64,7 @@
       <if test="typeName != null">
         type_name,
       </if>
-      <if test="flag != null">
-        flag,
-      </if>
+        flag
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -90,9 +88,7 @@
       <if test="typeName != null">
         #{typeName,jdbcType=VARCHAR},
       </if>
-      <if test="flag != null">
-        #{flag,jdbcType=BIT},
-      </if>
+        1
     </trim>
   </insert>
   <update id="updateByPrimaryKeySelective" parameterType="com.huangguizhao.v12.entity.TProduct">
