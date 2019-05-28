@@ -9,11 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"/>
 </head>
 <body>
+
+    <!--1.列表展示层-->
     <div class="container-fluid">
         <!--1.按钮-->
         <div class="row">
             <div class="col-md-4 col-md-offset-8">
-                <button type="button" class="btn btn-primary">添加</button>
+                <button type="button" class="btn btn-primary" id="to-add">添加</button>
                 <button type="button" class="btn btn-danger">删除</button>
             </div>
         </div>
@@ -78,7 +80,99 @@
             </div>
         </div>
     </div>
+
+
+    <!--2.添加层-->
+    <div class="modal fade" tabindex="-1" role="dialog" id="addModal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">添加商品</h4>
+                </div>
+                <div class="modal-body">
+                    <!--填充一个表单-->
+                    <form class="form-horizontal" id="addForm" action="product/add" method="post">
+                        <div class="form-group">
+                            <label for="name" class="col-sm-2 control-label">商品名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="name" name="product.name"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeId" class="col-sm-2 control-label">类别ID</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="typeId" name="product.typeId"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="typeName" class="col-sm-2 control-label">类别名称</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="typeName" name="product.typeName"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="price" class="col-sm-2 control-label">商品价格</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="price" name="product.price"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="salePoint" class="col-sm-2 control-label">商品卖点</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="salePoint" name="product.salePoint"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="chooseImage" class="col-sm-2 control-label">商品图片</label>
+                            <div class="col-sm-10">
+                                <input type="file" class="form-control" id="chooseImage" name="file"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="stock" class="col-sm-2 control-label">库存</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" id="stock" name="product.stock"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="productDesc" class="col-sm-2 control-label">商品描述</label>
+                            <div class="col-sm-10">
+                                <!--提交到服务器的内容-->
+                                <input type="hidden" id="productDesc" name="productDesc"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="add">Save changes</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+
     <!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" />
+
+    <!-- 处理添加 -->
+    <script type="text/javascript">
+        $(function () {
+            //1.实现添加层
+            $("#to-add").click(function () {
+                $("#addModal").modal({
+                    backdrop:'static',
+                    keyboard: false
+                });
+            })
+
+            //2.给添加按钮绑定事件
+            $("#add").click(function () {
+                $("#addForm").submit();
+            })
+        })
+
+    </script>
 </body>
 </html>
