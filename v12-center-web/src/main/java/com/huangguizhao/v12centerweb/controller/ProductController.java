@@ -3,6 +3,7 @@ package com.huangguizhao.v12centerweb.controller;
 import com.alibaba.dubbo.config.annotation.Reference;
 import com.github.pagehelper.PageInfo;
 import com.huangguizhao.v12.api.IProductApi;
+import com.huangguizhao.v12.common.pojo.ResultBean;
 import com.huangguizhao.v12.entity.TProduct;
 import com.huangguizhao.v12.vo.TProductVO;
 import org.springframework.stereotype.Controller;
@@ -45,9 +46,17 @@ public class ProductController {
     public String add(TProductVO vo){
         Long newId = productApi.add(vo);
         //
-        return "redirect:product/page/1/1";
+        return "redirect:/product/page/1/1";
     }
 
-
+    @PostMapping("del/{id}")
+    @ResponseBody
+    public ResultBean del(@PathVariable("id") Long id){
+        int count = productApi.deleteByPrimaryKey(id);
+        if(count > 0){
+            return new ResultBean(200,"删除成功");
+        }
+        return new ResultBean(500,"删除失败");
+    }
 
 }

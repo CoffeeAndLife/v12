@@ -56,4 +56,13 @@ public class ProductServiceImpl extends BaseServiceImpl<TProduct> implements IPr
         productDescMapper.insertSelective(desc);
         return product.getId();
     }
+
+    @Override
+    public int deleteByPrimaryKey(Long id) {
+        //1.实际是更新记录
+        TProduct product = new TProduct();
+        product.setId(id);
+        product.setFlag(false);
+        return productMapper.updateByPrimaryKeySelective(product);
+    }
 }

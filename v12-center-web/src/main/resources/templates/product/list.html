@@ -42,8 +42,8 @@
                         </td>
                         <td th:text="${product.salePoint}">商品卖点</td>
                         <td>
-                            <button type="button" class="btn btn-primary">修改</button>
-                            <button type="button" class="btn btn-danger">删除</button>
+                            <button type="button" class="btn btn-primary update" th:id="${product.id}">修改</button>
+                            <button type="button" class="btn btn-danger delete" th:id="${product.id}">删除</button>
                         </td>
                     </tr>
                 </table>
@@ -60,8 +60,8 @@
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
-                        <li>
-                            <a href="#" aria-label="Previous">
+                        <li th:if="${pageInfo.hasPreviousPage}">
+                            <a href="#" aria-label="Previous" th:href="|product/page/${pageInfo.prePage}/${pageInfo.pageSize}|">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -70,8 +70,8 @@
                             <a href="#" th:href="|product/page/${num}/${pageInfo.pageSize}|" th:text="${num}">1</a>
                         </li>
 
-                        <li>
-                            <a href="#" aria-label="Next">
+                        <li th:if="${pageInfo.hasNextPage}">
+                            <a href="#" aria-label="Next" th:href="|product/page/${pageInfo.nextPage}/${pageInfo.pageSize}|">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -139,8 +139,8 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="add">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                    <button type="button" class="btn btn-primary" id="add">添加</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
@@ -165,6 +165,29 @@
             $("#add").click(function () {
                 $("#addForm").submit();
             })
+
+            //3.单个删除
+            $(".delete").click(function () {
+                if(confirm("确定删除吗？删除之后，数据不可恢复！")){
+                    var id = $(this).attr("id");
+                    $.ajax({
+                        url : "product/del/"+id,
+                        type: "POST",
+                        success : function (result) {
+                            console.log(result);
+                            if(result.statusCode == 200){
+                                //location.href = "/product/page/1/1";
+                                location.reload();
+                            }else{
+                                alert(result.data);
+                            }
+                        }
+                    });
+                }
+            })
+
+            //4.批量删除
+
         })
 
     </script>
