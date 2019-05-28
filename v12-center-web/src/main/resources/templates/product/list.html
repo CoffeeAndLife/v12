@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>商品列表</title>
+    <base href="/"/>
     <!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css"/>
 </head>
@@ -28,13 +30,15 @@
                         <td>商品卖点</td>
                         <td>操作</td>
                     </tr>
-                    <tr>
-                        <td>ID</td>
-                        <td>商品类别</td>
-                        <td>商品名称</td>
-                        <td>商品价格</td>
-                        <td>商品图片</td>
-                        <td>商品卖点</td>
+                    <tr th:each="product : ${pageInfo.list}">
+                        <td th:text="${product.id}">ID</td>
+                        <td th:text="${product.typeName}">商品类别</td>
+                        <td th:text="${product.name}">商品名称</td>
+                        <td th:text="${product.price}">商品价格</td>
+                        <td>
+                            <img src="#" th:src="${product.images}" style="height: 100px;width: 100px;"/>
+                        </td>
+                        <td th:text="${product.salePoint}">商品卖点</td>
                         <td>
                             <button type="button" class="btn btn-primary">修改</button>
                             <button type="button" class="btn btn-danger">删除</button>
@@ -47,7 +51,9 @@
         <div class="row">
             <!--1.分页描述信息-->
             <div class="col-md-6">
-                当前第6页，共5条记录,共6页
+                当前第<span th:text="${pageInfo.pageNum}">6</span>页，
+                共<span th:text="${pageInfo.total}">66</span>条记录,
+                共<span th:text="${pageInfo.pages}">10</span>页
             </div>
             <div class="col-md-6">
                 <nav aria-label="Page navigation">
@@ -57,11 +63,11 @@
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
+
+                        <li th:each="num : ${pageInfo.navigatepageNums}" th:class="${num == pageInfo.pageNum ? 'active' : ''}">
+                            <a href="#" th:href="|product/page/${num}/${pageInfo.pageSize}|" th:text="${num}">1</a>
+                        </li>
+
                         <li>
                             <a href="#" aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>

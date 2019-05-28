@@ -14,6 +14,14 @@
   <sql id="Base_Column_List">
     id, name, sale_point, price, images, type_id, type_name, flag
   </sql>
+
+  <select id="list" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from t_product
+    where flag=1
+  </select>
+
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
