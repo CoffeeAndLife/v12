@@ -137,8 +137,11 @@
                         <div class="form-group">
                             <label for="productDesc" class="col-sm-2 control-label">商品描述</label>
                             <div class="col-sm-10">
+                                <div id="editor">
+
+                                </div>
                                 <!--提交到服务器的内容-->
-                                <input type="text" id="productDesc" name="productDesc"/>
+                                <input type="hidden" id="productDesc" name="productDesc"/>
                             </div>
                         </div>
                     </form>
@@ -157,6 +160,8 @@
 
     <script src="js/jquery.uploadifive.js"></script>
 
+    <script src="https://unpkg.com/wangeditor@3.1.1/release/wangEditor.min.js"></script>
+
     <!-- 处理添加 -->
     <script type="text/javascript">
         $(function () {
@@ -170,6 +175,10 @@
 
             //2.给添加按钮绑定事件
             $("#add").click(function () {
+                //将富文本框的内容获取到并且赋值给隐藏域
+                var content = editor.txt.html();
+                $("#productDesc").val(content);
+                //
                 $("#addForm").submit();
             })
 
@@ -203,13 +212,32 @@
                 'onUploadComplete' : function(file, data) {
                     var data = JSON.parse(data);
                     if(data.statusCode == 200){
-                        $("#showImage").attr("src",data.data);
+                        $("#showImage").attr("src",data.data).show();
                         $("#images").val(data.data);
                     }else{
                         alert(data.data);
                     }
                 }
             });
+
+            //6.初始化富文本框
+            var E = window.wangEditor;
+            var editor = new E('#editor');
+            // 自定义菜单配置
+            editor.customConfig.menus = [
+                'head',  // 标题
+                'bold',  // 粗体
+                'fontName',  // 字
+                'justify',  // 对齐方式
+                'image',  // 插入图片
+                'video',  // 插入视频
+                'undo',  // 撤销
+                'redo'  // 重复
+            ];
+            // 配置服务器端地址
+            editor.customConfig.uploadImgServer = '/file/multiUpload';
+            editor.customConfig.uploadFileName = 'files';
+            editor.create();
         })
 
     </script>

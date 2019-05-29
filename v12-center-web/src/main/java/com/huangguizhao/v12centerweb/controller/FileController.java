@@ -3,6 +3,7 @@ package com.huangguizhao.v12centerweb.controller;
 import com.github.tobato.fastdfs.domain.StorePath;
 import com.github.tobato.fastdfs.service.FastFileStorageClient;
 import com.huangguizhao.v12.common.pojo.ResultBean;
+import com.huangguizhao.v12.common.pojo.WangEditorUploadResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
@@ -45,5 +46,30 @@ public class FileController {
             //TODO 记录异常信息到日志中
             return new ResultBean(500,"文件上传失败");
         }
+    }
+
+    @PostMapping("multiUpload")
+    @ResponseBody
+    public WangEditorUploadResult multiUpload(MultipartFile[] files){
+        //1
+        String[] data = new String[files.length];
+        //2
+        try {
+            for (int i=0;i<files.length;i++) {
+                String originalFilename = files[i].getOriginalFilename();
+                String extName = originalFilename.substring(originalFilename.lastIndexOf(".")+1);
+                //
+                StorePath storePath = client.uploadFile(files[i].getInputStream(), files[i].getSize(), extName, null);
+                //
+                StringBuilder path = new StringBuilder(imageServer).append(storePath.getFullPath());
+                //
+                data[i] = path.toString();
+            }
+        }catch (IOException e){
+            e.printStackTrace();
+            //TODO 记录异常信息到日志中
+            return new WangEditorUploadResult("-1",null);
+        }
+        return new WangEditorUploadResult("0",data);
     }
 }
