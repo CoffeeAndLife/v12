@@ -19,6 +19,20 @@ public class TProduct implements Serializable{
 
     private Boolean flag;
 
+    @Override
+    public String toString() {
+        return "TProduct{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", salePoint='" + salePoint + '\'' +
+                ", price=" + price +
+                ", images='" + images + '\'' +
+                ", typeId=" + typeId +
+                ", typeName='" + typeName + '\'' +
+                ", flag=" + flag +
+                '}';
+    }
+
     public Long getId() {
         return id;
     }

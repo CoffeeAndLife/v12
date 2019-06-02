@@ -7,5 +7,4 @@ import com.huangguizhao.v12.entity.TProductType;
  * @author huangguizhao
  */
 public interface IProductTypeApi extends IBaseService<TProductType>{
-    
 }
