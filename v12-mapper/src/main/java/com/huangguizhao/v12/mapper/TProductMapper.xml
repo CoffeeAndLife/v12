@@ -91,6 +91,14 @@
         1
     </trim>
   </insert>
+
+  <update id="updateFlagToFalse" parameterType="java.util.List">
+    update t_product set flag=0 where id in
+    <foreach collection="list" open="(" close=")" item="id" separator=",">
+      #{id}
+    </foreach>
+  </update>
+
   <update id="updateByPrimaryKeySelective" parameterType="com.huangguizhao.v12.entity.TProduct">
     update t_product
     <set>

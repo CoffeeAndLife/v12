@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <base href="/"/>
+    <title>Title</title>
+</head>
+<body>
+    ok!
+    <ul>
+        <!--第一级分类-->
+        <li th:each="ptype : ${list}" th:if="${ptype.pid == 0}">
+            <span th:text="${ptype.name}"></span>
+            <!--二级分类-->
+            <ul>
+                <li th:each="subtype : ${list}" th:if="${subtype.pid == ptype.id}">
+                    <span th:text="${subtype.name}"></span>
+                    <!--三级分类-->
+                    <ul>
+                        <li th:each="grandSonType : ${list}" th:if="${grandSonType.pid == subtype.id}" th:text="${grandSonType.name}">
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</body>
+</html>

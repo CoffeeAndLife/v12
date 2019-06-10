@@ -203,17 +203,14 @@
         商品分类快捷
     </a>
 
+
     <div class="kj-show2">
-        <div class="kj-info1" mg="shiping" th:each="ptype : ${list}" th:if="${ptype.pid == 0}">
+        <div class="kj-info1" mg="shiping" th:each="ptype : ${list}" th:if="${ptype.pid == 0}" th:mg="|shiping${ptype.id}|">
             <dl class="kj-dl1">
-                ptype:<span th:text="${ptype.id}"></span>
                 <dt><a href="#" th:text="${ptype.name}">食品/饮料/酒水</a></dt>
             </dl>
-
-            <div class="kj-if-show" mg2="shiping">
+            <div class="kj-if-show" mg2="shiping" th:mg2="|shiping${ptype.id}|">
                 <dl th:each="sonType : ${list}" th:if="${sonType.pid == ptype.id}">
-                    ptype:<span th:text="${ptype.id}"></span>
-                    sonType:<span th:text="${sonType.id}"></span>
                     <dt th:text="${sonType.name}">零食/糖果/巧克力</dt>
                     <dd>
                         <a href="#" th:each="grandSonType : ${list}" th:if="${grandSonType.pid == sonType.id}" th:text="${grandSonType.name}">坚果迷线</a>
@@ -221,7 +218,6 @@
                     <div style="clear:both;"></div>
                 </dl>
             </div>
-
         </div>
     </div>
 

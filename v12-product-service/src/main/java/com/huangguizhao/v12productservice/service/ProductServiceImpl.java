@@ -5,6 +5,7 @@ import com.github.pagehelper.PageInfo;
 import com.huangguizhao.v12.api.IProductApi;
 import com.huangguizhao.v12.common.base.BaseServiceImpl;
 import com.huangguizhao.v12.common.base.IBaseDao;
+import com.huangguizhao.v12.common.pojo.ResultBean;
 import com.huangguizhao.v12.entity.TProduct;
 import com.huangguizhao.v12.entity.TProductDesc;
 import com.huangguizhao.v12.mapper.TProductDescMapper;
@@ -55,6 +56,11 @@ public class ProductServiceImpl extends BaseServiceImpl<TProduct> implements IPr
         desc.setProductId(product.getId());
         productDescMapper.insertSelective(desc);
         return product.getId();
+    }
+
+    @Override
+    public Integer delByIds(List<Long> ids) {
+        return productMapper.updateFlagToFalse(ids);
     }
 
     @Override

@@ -9,10 +9,10 @@ import java.util.Properties;
 /**
  * @author huangguizhao
  */
-@Configuration
+//@Configuration
 public class CommonConfig {
 
-    @Bean
+    //@Bean
     public PageHelper initPageHelper(){
         PageHelper pageHelper = new PageHelper();
         Properties properties = new Properties();

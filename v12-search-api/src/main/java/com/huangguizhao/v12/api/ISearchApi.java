@@ -10,4 +10,6 @@ public interface ISearchApi {
     public ResultBean syncAllData();
 
     public ResultBean searchByKeyWord(String keyWord);
+
+    public ResultBean updateById(Long id);
 }

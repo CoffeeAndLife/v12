@@ -17,6 +17,12 @@ fdfs:
     height: 100
   tracker-list: 192.168.142.133:22122
 
+
 image:
   server: http://192.168.142.133/
+
+spring:
+  thymeleaf:
+    cache: false
+
 

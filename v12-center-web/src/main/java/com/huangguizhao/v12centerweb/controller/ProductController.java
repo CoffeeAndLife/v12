@@ -59,4 +59,14 @@ public class ProductController {
         return new ResultBean(500,"删除失败");
     }
 
+    @PostMapping("delByIds")
+    @ResponseBody
+    public ResultBean delByIds(@RequestParam List<Long> ids){
+        System.out.println(ids);
+        int count = productApi.delByIds(ids);
+        if(count > 0){
+            return new ResultBean(200,"删除成功");
+        }
+        return new ResultBean(500,"删除失败");
+    }
 }

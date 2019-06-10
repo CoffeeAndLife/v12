@@ -100,4 +100,26 @@ public class SearchServiceImpl implements ISearchApi{
         }
         return new ResultBean(200,results);
     }
+
+    @Override
+    public ResultBean updateById(Long id) {
+        //1.获取数据
+        TProduct product = productMapper.selectByPrimaryKey(id);
+        //2.更新到索引库
+        SolrInputDocument document = new SolrInputDocument();
+        document.setField("id",product.getId());
+        document.setField("product_name",product.getName());
+        document.setField("product_price",product.getPrice());
+        document.setField("product_images",product.getImages());
+        document.setField("product_sale_point",product.getSalePoint());
+        //
+        try {
+            solrClient.add(document);
+            solrClient.commit();
+        } catch (SolrServerException | IOException e) {
+            e.printStackTrace();
+            return new ResultBean(500,"数据同步失败");
+        }
+        return new ResultBean(200,"数据同步成功");
+    }
 }

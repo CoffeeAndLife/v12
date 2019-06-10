@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-4 col-md-offset-8">
                 <button type="button" class="btn btn-primary" id="to-add">添加</button>
-                <button type="button" class="btn btn-danger">删除</button>
+                <button type="button" class="btn btn-danger" id="batch-del">批量删除</button>
             </div>
         </div>
         <!--2.列表内容-->
@@ -25,7 +25,10 @@
             <div class="col-md-12">
                 <table class="table table-striped">
                     <tr>
-                        <td>ID</td>
+                        <td>
+                            <!--全选复选框-->
+                            <input type="checkbox" id="checkAll"/>
+                        </td>
                         <td>商品类别</td>
                         <td>商品名称</td>
                         <td>商品价格</td>
@@ -34,7 +37,9 @@
                         <td>操作</td>
                     </tr>
                     <tr th:each="product : ${pageInfo.list}">
-                        <td th:text="${product.id}">ID</td>
+                        <td>
+                            <input type="checkbox" class="cxs" th:value="${product.id}"/>
+                        </td>
                         <td th:text="${product.typeName}">商品类别</td>
                         <td th:text="${product.name}">商品名称</td>
                         <td th:text="${product.price}">商品价格</td>
@@ -203,6 +208,38 @@
             })
 
             //4.批量删除
+            //4.1 实现全选控制效果
+            $("#checkAll").click(function () {
+                $(".cxs").prop("checked",$(this).prop("checked"));
+            });
+            $(".cxs").click(function () {
+                $("#checkAll").prop("checked",$(".cxs").length == $(".cxs:checked").length);
+            });
+
+            //4.2 实现批量删除
+            $("#batch-del").click(function () {
+               //1.获取到被选中的复选框
+                var delIds = $(".cxs:checked");
+                var ids = [];
+                //2.遍历赋值
+                for (var i=0;i<delIds.length;i++){
+                    ids.push(delIds[i].value);
+                }
+                //3.发送请求
+                if(confirm("是否确定批量删除？删除之后，数据不可恢复！")){
+                    $.ajax({
+                        type: "POST",
+                        url: "product/delByIds",
+                        data: "ids="+ids,
+                        success : function (data) {
+                            if(data.statusCode == 200){
+                                alert("批量删除成功！");
+                                location.href = "product/page/1/1";
+                            }
+                        }
+                    })
+                }
+            });
 
             //5.初始化文件上传
             $('#chooseImage').uploadifive({
